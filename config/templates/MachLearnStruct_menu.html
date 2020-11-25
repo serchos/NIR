@@ -1,0 +1,96 @@
+{% block scripts %}
+	<script type="text/javascript" src="{{ url_for('static', filename='MachLearnStruct.js') }}"></script>
+{% endblock %}
+<style type="text/css">
+	#BPnetwork, #Situationnetwork  {
+		height: 500px;
+		border: 1px solid lightgray;
+	}
+
+	#situationUL, #BPUL {
+		height: 500px;
+	}
+	.just-padding {
+    padding: 15px;
+	}
+
+	.list-group.list-group-root {
+		padding: 0;
+		overflow: hidden;
+	}
+
+	.list-group.list-group-root .list-group {
+		margin-bottom: 0;
+	}
+
+	.list-group.list-group-root .list-group-item {
+		border-radius: 0;
+		border-width: 1px 0 0 0;
+	}
+
+	.list-group.list-group-root > .list-group-item:first-child {
+		border-top-width: 0;
+	}
+
+	.list-group-item .glyphicon {
+		margin-right: 5px;
+	}
+</style>
+<ul class="nav nav-tabs">
+	
+	{% if struct_active_tab_number == 1 %}
+		<li class="active">
+	{% else %}
+		<li>
+	{% endif %}
+		<a data-toggle="tab" href="#bp_ontology_form">Модель загруженной БП</a>
+	</li>
+	
+	{% if struct_active_tab_number == 2 %}
+		<li class="active" id="situation_ontology_li">
+	{% else %}
+		<li id="situation_ontology_li">
+	{% endif %}
+		<a data-toggle="tab" href="#situation_ontology_form">Текущая ситуация</a>
+	</li>
+	
+	{% if struct_active_tab_number == 3 %}
+		<li class="active" id="result_ontology_li">
+	{% else %}
+		<li id="result_ontology_li">
+	{% endif %}
+		<a data-toggle="tab" href="#result_ontology_form">Результат структурного извлечения</a>
+	</li>
+	
+</ul>
+
+<div class="tab-content">
+
+	{% if struct_active_tab_number == 1 %}
+		<div id="bp_ontology_form" class="tab-pane fade in active">
+	{% else %}
+		<div id="bp_ontology_form" class="tab-pane fade">
+	{% endif %}
+		<br>
+		{% include 'MachLearnBPOntology.html' %}
+	</div>
+	
+	{% if struct_active_tab_number == 2 %}
+		<div id="situation_ontology_form" class="tab-pane fade in active">
+	{% else %}
+		<div id="situation_ontology_form" class="tab-pane fade">
+	{% endif %}
+		<br>
+		{% include 'MachLearnSituationOntology.html' %}
+	</div>
+	
+	{% if struct_active_tab_number == 3 %}
+		<div id="result_ontology_form" class="tab-pane fade in active">
+	{% else %}
+		<div id="result_ontology_form" class="tab-pane fade">
+	{% endif %}
+		<br>
+		{% include 'MachLearnStruct_result.html' %}
+	</div>
+
+</div>

@@ -1,0 +1,60 @@
+{% block scripts %}
+	<script type="text/javascript" src="{{ url_for('static', filename='MachLearnStruct.js') }}"></script>
+{% endblock %}
+
+{% if not BP_ontology_names_list %}
+	<div class="row">
+		<form action="{{ url_for('MachLearn.MachLearn') }}" id = "upload_situation_file" enctype="multipart/form-data" method=post>
+			<!-- <form method="POST" id = "upload_files" enctype="multipart/form-data"> -->
+			<p id="msg"></p>
+			<span class="help-block col-md-12">Загрузите файл с моделью ситуации</span>
+			<div class="form-row">
+			
+				<div class="form-group col-md-3">
+					<input type="file" name="file" id="file" class="form-control" accept=".owl">
+				</div>
+				<!-- COMPONENT END -->
+				<div class="form-group col-md-6">
+					<button id="upload_button" type=submit class="btn btn-primary">Загрузить</button>
+				</div>
+			</div>
+		</form>
+	</div>
+{% endif %}
+
+{% if BP_ontology_names_list %}
+	<div class="row">
+		<form action="{{ url_for('MachLearn.show_BP_struct') }}" id="struct_select_form">
+			
+			<div class="form-row">
+				
+				<div class="form-group col-md-3">
+					<select name="BP_names_struct" id="BP_names_struct" class="form-control select_change">
+						
+						{% if current_BP_name_good_bad %}
+							<option selected value={{ current_BP_name_good_bad }}>{{ current_BP_name_good_bad }}</option>
+						{% else %}
+							<option selected disabled value="">Выберите базу прецедентов</option>
+						{% endif %}
+						
+						{% for BP_ontology in BP_ontology_names_list %}
+							<option value={{ BP_ontology }}>{{ BP_ontology }}</option>
+						{% endfor %}
+						
+					</select>
+				</div>
+				
+				<div class="form-group col-md-6">
+					<input type="submit"  value="Загрузить модель выбранной БП " id="show_struct_button" class="btn btn-default" disabled>
+				</div>
+				
+			</div>
+			
+		</form>
+	</div>
+{% endif %}
+
+<br/>
+
+<div id="struct_menu">
+</div>

@@ -1,0 +1,23 @@
+<div class="cv_table">
+	<table class="table table-striped table-bordered">
+		
+		<thead>
+			<tr>
+				<th>k</th>
+				{% for k in range(1, max_neighbour_count + 1) %}
+					<th> {{ k }} </th>
+				{% endfor %}
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr>
+				<td>точность</td>
+				{% for elem in accuracy_of_classif %}
+					<td> {{ elem }} </td>
+				{% endfor %}
+			</tr>
+		</tbody>
+		
+	</table>
+</div>

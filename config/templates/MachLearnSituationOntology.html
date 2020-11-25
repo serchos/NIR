@@ -1,0 +1,141 @@
+{% block scripts %}
+	<script type="text/javascript" src="{{ url_for('static', filename='MachLearnStruct.js') }}"></script>
+{% endblock %}
+
+{% if mistake_message %}
+	<div id="mistake" class="alert alert-danger" role="alert" style="width: 800px">
+		{{mistake_message}}
+	</div>
+{% endif %}
+
+{%if hierarchySituation %}
+	<div class="row col-sm-12" id="SituationOntologyStorage" data-graph="{{situation_hierarchy}}" data-edges="{{situation_edges}}">
+			<h3>Модель текущей ситуации</h3>
+			<div class="col-sm-8">
+				<div id="Situationnetwork">
+				</div>
+			</div>
+			<div class="col-sm-4" id="situationUL">
+				{%if hierarchySituation %}
+				<div class="list-group list-group-root well">
+					{% for key, value in hierarchySituation.items() recursive %}
+						{% if value %}
+							<a href="#situation{{key}}" class="list-group-item" data-toggle="collapse">
+								<i class="glyphicon glyphicon-chevron-right"></i>{{key}}
+							</a>
+							<div class="list-group collapse" id="situation{{key}}">
+							{{loop(value.items())}}
+							</div>
+						{% else %}
+						<a href="#" class="list-group-item">{{key}}</a>
+						{% endif %}
+					{%endfor%}
+				</div>
+				{% endif %}
+			</div>
+	</div>
+	
+	<!-- <div style="height: 520px"></div> -->
+	
+	<div class='row'>
+	<div class='col-sm-12'>
+	<hr/>
+		<form action="{{ url_for('MachLearn.add_or_delete_param') }}" id="situation_form">
+			<div class="new_node form-horizontal">
+					<div class="form-group row">
+						<p class="control-label col-sm-2" for="current_node">Текущий параметр:</p>
+						<div class="col-sm-4">
+							<span class="label label-primary" name="current_node" id="current_node">Не выбрано</span>
+							<input type="text" name="current_node" id="current_node_hidden" hidden></input>
+						</div>
+						<div class="col-sm-4">
+							<input type="submit" class="btn btn-success" name="add_param_submit" id="add_new_param" disabled value="Добавить параметр" style="width: 155px">
+						</div>
+					</div>
+					<div class="form-group row">
+						<p class="control-label col-sm-2" for="node_name">Новый параметр:</p>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="node_name" name="node_name" placeholder="Введите имя параметра">
+						</div>
+						<div class="col-sm-4">
+							<input type="submit" class="btn btn-danger" name="del_param_submit" id="delete_param" disabled value="Удалить параметр" style="width: 155px">
+						</div>
+					</div>
+			</div>
+		</form>
+		<hr/>
+		</div>
+	</div>
+
+	<div id="situation_table">
+		<table id="situationTable" name="situationTable" class="table table-bordered table-striped">
+			<thead>
+				<tr id="first_tr" class="first_tr">
+						{% for params in paramsSituation %}
+							<th>{{ params }}</th>
+						{% endfor %}
+	
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					{% for params in paramsSituation %}
+						<td>0</td>
+					{% endfor %}
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<div>
+		<form action="{{ url_for('MachLearn.extraction_for_struct') }}" id="extraction_for_struct_form">
+			<hr/>
+			<div class="row">
+				<div class="col-md-3">
+					<p>Вклад при совпадении по имени</p>
+					<input name="CF1" id="CF1" value="40" class="form-control">
+				</div>
+				
+				<div class="col-md-3">
+					<p>Вклад при совпадении по родителю</p>
+					<input name="CF2" id="CF2" value="20" class="form-control">
+				</div>
+				
+			</div>
+			
+			<hr/>
+			
+			<div class="row">
+	
+				<div class="col-md-3">
+					<p>Выбор алгоритма</p>
+					<select id="name_of_algorithm_struct" name="name_of_algorithm_struct" class="form-control">
+						<option value="kNN">Метод k-ближайших соседей</option>
+					</select>
+				</div>
+	
+				<div class="col-md-3">
+					<p>Количество соседей (k)</p>
+					<input name="neighbour_count_struct" id="neighbour_count_struct" value="1" class="form-control">
+				</div>
+	
+				<div class="col-md-3">
+					<p>Выбор метрики</p>
+					<select id="metric_name_struct" name="metric_name_struct" class="form-control">
+						<option value="metric_L1">Метрика L1</option>
+						<option value="metric_Euclid">Евклидова метрика</option>
+						<option value="metric_Chebyshev">Метрика Чебышева</option>
+					</select>
+				</div>
+				
+			</div>
+			<br/>
+			<div class="row">
+				<input id="field_to_remember_checkbox" name="field_to_remember_checkbox" value="on" hidden>
+				<div class="col-md-3"><input type="submit" class="btn btn-primary" name="struct_extraction" id="struct_extraction" value="Извлечение"></div>
+				<input type="text" name="situationString" id="situationString" hidden>
+			</div>
+			
+		</form>
+	</div>
+{%endif%}

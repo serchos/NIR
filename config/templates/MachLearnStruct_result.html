@@ -1,0 +1,32 @@
+<div id="result_struct_extraction">
+
+	<div class="table_scroll">
+		<table class="table table-striped table-bordered">
+			
+			<thead>
+				<tr>
+					<th>Номер парного соответствия</th>
+					<th>Оценка струтурного соответствия</th>
+					<th>Оценка kNN</th>
+					<th>Среднее арифметическое оценок</th>
+					<th>Решение</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				{% for i in solutions_list_for_all_pair_from_kNN %}
+					<tr>
+						<td>{{ loop.index }}</td>
+						<td>{{ pair_score_persent_list[loop.index - 1] }}</td>
+						<td>{{ evaluation_list_for_all_pair_from_kNN[loop.index - 1] }}</td>
+						<td>{{ ((evaluation_list_for_all_pair_from_kNN[loop.index - 1] + pair_score_persent_list[loop.index - 1])/2)|round(2) }}</td>
+						<td>{{ i }}</td>
+	
+					</tr>
+				{% endfor %}
+			</tbody>
+			
+		</table>
+	</div>
+
+</div>

@@ -1,0 +1,34 @@
+<div class="table_scroll">
+	<table class="table table-striped table-bordered">
+		
+		<thead>
+			<tr>
+				{% if table_columns_description_tuples_without_modes %}
+					<th>{{table_columns_description_tuples_without_modes[0][0]}} </th>
+					{% for str in table_columns_description_tuples_without_modes[1:] %}
+						<th>{{ str[0] }}</th>
+					{% endfor %}
+				{% endif %}
+			</tr>
+		</thead>
+		
+		<tbody>
+		{% for str in precedents_matrix %}
+			<tr>
+				{% for i in str %}
+					<td>{{ i }}</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+		</tbody>
+		
+	</table>
+</div>
+
+<br>
+
+<div class="radio-group">
+	<p><input type="radio" name="precedents_from_table" id="precedents_from_table" value="precedents_from_table" disabled> Выбрать прецеденты из таблицы</p>
+	<p><input type="radio" name="cases_from_table" id="cases_from_table" value="cases_from_table" disabled> Выбрать классифицируемые данные из таблицы</p>
+	<p><input type="radio" name="cases_from_keyboard" id="cases_from_keyboard" value="case_from_keyboard"> Добавить классифицируемые данные</p>
+</div>

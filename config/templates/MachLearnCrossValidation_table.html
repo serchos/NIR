@@ -1,0 +1,106 @@
+<div class="table_scroll">
+	<table class="table table-striped table-bordered">
+		
+		<thead>
+			<tr>
+				{% if table_columns_description_tuples_without_modes %}
+					<th>{{table_columns_description_tuples_without_modes[0][0]}} </th>
+					{% for str in table_columns_description_tuples_without_modes[1:] %}
+						<th>{{ str[0] }}</th>
+					{% endfor %}
+				{% endif %}
+			</tr>
+		</thead>
+		
+		<tbody>
+		{% for str in precedents_matrix %}
+			<tr>
+				{% for i in str %}
+					<td>{{ i }}</td>
+				{% endfor %}
+			</tr>
+		{% endfor %}
+		</tbody>
+		
+	</table>
+</div>
+
+<br/>
+<hr/>
+
+<form name="cross_validation_form" id="cross_validation_form" action="{{ url_for('MachLearn.do_cross_validation') }}">
+
+	<div class="container">
+
+		<div class="row">
+			<p>Подбор оптимального числа соседей (k) для метода kNN:</p>
+		</div>
+
+		<br/>
+
+		<div class="row">
+			<div class="col-md-4">
+				<p>Метод кросс-валидации</p>
+			</div>
+			<div class="col-md-4">
+				<select id="name_of_cross_validation" name="name_of_cross_validation" class="form-control">
+					<option value="hold-out_CV">Контроль на отложенных данных</option>
+				</select>
+			</div>
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+			<div class="col-md-4">
+				<p>Максимальное число k</p>
+			</div>
+			<div class="col-md-4">
+				<input name="max_neighbour_count_cross_validation" id="max_neighbour_count_cross_validation" value="1" class="form-control">
+			</div>
+		</div>
+		
+		<br/>
+		
+		<div class="row">
+			<div class="col-md-4">
+				<p>Метрика</p>
+			</div>
+			<div class="col-md-4">
+				<select id="metric_name_cross_validation" name="metric_name_cross_validation" class="form-control">
+					<option value="metric_L1">Метрика L1</option>
+					<option value="metric_Euclid">Евклидова метрика</option>
+					<option value="metric_Chebyshev">Метрика Чебышева</option>
+				</select>
+			</div>
+		</div>
+	
+		<br/>
+	
+		<div class="row">
+			<div class="col-md-4">
+				<p>Учитывать веса параметров</p>
+			</div>
+			<div class="col-md-4">
+				<input type="checkbox" checked id="use_weights" class="form-control">
+			</div>
+		</div>
+	
+		<br/>
+	
+		<div class="row">
+			<input id="do_cross_validation" name="do_cross_validation" type="submit" value="Подобрать оптимальное число соседей" class="btn btn-default">
+		</div>
+		
+		
+	</div>
+	
+	<input id="field_to_remember_checkbox_cv" name="field_to_remember_checkbox_cv" value="on" hidden>
+	<input id="hidden_database_name_input_cv" name="hidden_database_name_input_cv" value="{{ chosen_database_name }}" hidden>
+
+</form>
+
+<br/>
+<hr/>
+
+<div id="answer_of_cross_validation"></div>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://www.semanticweb.org/polya/ontologies/2020/4/untitled-ontology-42"
+         xmlns="http://www.semanticweb.org/polya/ontologies/2020/4/untitled-ontology-42#">
+
+<owl:Ontology rdf:about="http://www.semanticweb.org/polya/ontologies/2020/4/untitled-ontology-42"/>
+
+<owl:Class rdf:about="#Diameter">
+  <rdfs:subClassOf rdf:resource="#situation"/>
+</owl:Class>
+
+<owl:Class rdf:about="#situation"/>
+
+<owl:Class rdf:about="#Height">
+  <rdfs:subClassOf rdf:resource="#situation"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Length">
+  <rdfs:subClassOf rdf:resource="#situation"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Shell_weight">
+  <rdfs:subClassOf rdf:resource="#Whole_weight"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Whole_weight">
+  <rdfs:subClassOf rdf:resource="#situation"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Viscera_weight">
+  <rdfs:subClassOf rdf:resource="#Whole_weight"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Sex">
+  <rdfs:subClassOf rdf:resource="#situation"/>
+</owl:Class>
+
+
+</rdf:RDF>

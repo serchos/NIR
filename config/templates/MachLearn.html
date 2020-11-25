@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block title %}Извлечение{% endblock %}
+{% block MenuMachLearn %}class="active"{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript" src="{{ url_for('static', filename='MachLearn.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+	
+
+
+<big>
+	<h1 style="text-align: center">Извлечение</h1>
+	
+	<ul class="nav nav-tabs">
+		
+		{% if active_tab_number == 1 %}
+			<li class="active">
+		{% else %}
+			<li>
+		{% endif %}
+			<a data-toggle="tab" href="#parametric_form">параметрическая форма</a>
+		</li>
+		
+		{% if active_tab_number == 2 %}
+			<li class="active">
+		{% else %}
+			<li>
+		{% endif %}
+			<a data-toggle="tab" href="#successful_base">с использованием базы "удачных" и "неудачных"</a>
+		</li>
+		
+		{% if active_tab_number == 3 %}
+			<li class="active">
+		{% else %}
+			<li>
+		{% endif %}
+			<a data-toggle="tab" href="#structured_form">структурированная форма</a>
+		</li>
+		
+		{% if active_tab_number == 4 %}
+			<li class="active">
+		{% else %}
+			<li>
+		{% endif %}
+			<a data-toggle="tab" href="#cross_validation">подбор числа k для метода kNN</a>
+		</li>
+		
+	</ul>
+
+	<div class="tab-content">
+	
+		{% if active_tab_number == 1 %}
+			<div id="parametric_form" class="tab-pane fade in active">
+		{% else %}
+			<div id="parametric_form" class="tab-pane fade">
+		{% endif %}
+			<br>
+			{% include 'MachLearnParam.html' %}
+		</div>
+		
+		{% if active_tab_number == 2 %}
+			<div id="successful_base" class="tab-pane fade in active">
+		{% else %}
+			<div id="successful_base" class="tab-pane fade">
+		{% endif %}
+			<br>
+			{% include 'MachLearnGoodBad.html' %}
+		</div>
+		
+		{% if active_tab_number == 3 %}
+			<div id="structured_form" class="tab-pane fade in active">
+		{% else %}
+			<div id="structured_form" class="tab-pane fade">
+		{% endif %}
+			<br>
+			{% include 'MachLearnStruct.html' %}
+		</div>
+
+		{% if active_tab_number == 4 %}
+			<div id="cross_validation" class="tab-pane fade in active">
+		{% else %}
+			<div id="cross_validation" class="tab-pane fade">
+		{% endif %}
+			<br>
+			{% include 'MachLearnCrossValidation.html' %}
+		</div>
+	
+	</div>
+		
+{% endblock%}
+

@@ -1,0 +1,50 @@
+<form action="{{ url_for('MachLearn.show_precedents_table_cross_validation') }}" id="select_form_cross_validation">
+	<div class="form-row">
+		
+		<div class="form-group col-md-3">
+			<select name="BP_names_list_cross_validation" id="BP_names_list_cross_validation" class="form-control">
+				
+				{% if current_BP_name_cross_validation %}
+					<option selected value={{ current_BP_name_cross_validation }}>{{ current_BP_name_cross_validation }}</option>
+				{% else %}
+					<option selected disabled value="">Выберите базу прецедентов</option>
+				{% endif %}
+				
+				{% for BP_name in BP_names_tupple %}
+					<option value={{ BP_name[0] }}>{{ BP_name[0] }}</option>
+				{% endfor %}
+				
+			</select>
+		</div>
+		
+		<div class="form-group col-md-3">
+			<select name="mode_choice_cross_validation" id="mode_choice_cross_validation" class="form-control">
+				
+				{% if mode_of_BP %}
+					<option selected value={{ mode_of_BP.value }}>{{ mode_of_BP.text }}</option>
+				{% else %}
+					<option selected disabled value="">Выберите часть базы для просмотра</option>
+				{% endif %}
+				
+				{% for mode in modes_list %}
+					{% if mode.value in ["train", "test"] %}
+						<option value={{ mode.value }}>{{ mode.text }}</option>
+					{% endif %}
+				{% endfor %}
+				
+			</select>
+		</div>
+		
+		<div class="form-group col-md-6">
+			<input type="submit" value="Показать содержимое" disabled id="show_table_cross_validation_button" class="btn btn-default">
+		</div>
+		
+	</div>
+	
+</form>
+
+<br/>
+
+<div id="table_div_cross_validation">
+
+</div>

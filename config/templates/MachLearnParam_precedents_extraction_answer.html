@@ -1,0 +1,22 @@
+<form name="add_g_b_cases_form" id="add_g_b_cases_form" action="{{ url_for('MachLearn.add_good_bad_precedents_to_table') }}">
+	<table class="table table-striped table-bordered" id="answer_table">
+	
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>{{ answer_name_string}}</th>
+				<th>Число проголосовавших</th>
+			</tr>
+		</thead>
+	
+		<tbody>
+			{% for i in solutions_list_for_all_cases %}
+				<tr>
+					<td>{{ loop.index }}</td>
+					<td>{{ i }}</td>
+					<td>{{ max_count_voters_list_for_all_cases[loop.index - 1] }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+
+</form>

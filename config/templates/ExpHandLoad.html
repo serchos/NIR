@@ -1,0 +1,150 @@
+{% extends "layout.html" %}
+{% block title %}Создание БП{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{{ url_for('static', filename='ExpHandLoad.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<h1>Экспериментальное создание базы прецедентов</h1>
+<br>
+{% if mistake_message %}
+<div id="mistake_message_new" class="alert alert-danger" role="alert" style="width: 800px">
+    <strong>{{ mistake_message }}</strong>
+</div>
+{% endif %}
+<!-- див с сообщением об ошибках -->
+<div id="mistake_message" class="alert alert-danger" role="alert" style="width: 800px" hidden>
+    <strong>Ошибка!</strong> Для создания базы прецедентов, заполните все поля, подсвеченные красным.
+</div>
+<form action="{{ url_for('ExpHandLoad.AcceptAndCreateScheme') }}" method=post enctype=multipart/form-data>
+    <p>Укажите имя будущей базы прецедентов:<input name=BPName id="BPName" maxlength="20" size="20"
+                                                   style="margin-left: 5px;" data-toggle="tooltip"
+                                                   data-placement="right"
+                                                   title="Для создания БП необходимо ввести её имя"></p>
+    <p>Введите число параметров:<input name="ColCount" id="ColCount" type="number" maxlength="10" size="10"
+                                       style="margin-left: 5px;"></p>
+    <p>
+        <input name=Create type=button class="btn btn-default" value='Создать параметры'
+               onclick="javascript: AddColumns()">
+        <input name=Create type=button class="btn btn-default" value='Добавить параметр в конец'
+               onclick="javascript: AddToEnd()">
+        <input name=Create type=button class="btn btn-default" value='Удалить параметр с конца'
+               onclick="javascript: DelFromEnd()">
+        <input name=Create type=button class="btn btn-default" value='Добавить параметр в указанное место'
+               onclick="javascript: AddChoice()">
+        <input name=Create type=button class="btn btn-default" value='Удалить выбранный параметр'
+               onclick="javascript: DelChoice()">
+        <!-- <input name=Create type=button class="btn btn-default" value='тест' onclick="javascript: testfunction()"> -->
+        <input name=Create type=button class="btn btn-default" value='Снять все выделенные объекты'
+               onclick="javascript: RemoveMark()">
+    </p>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p>
+                <input type=radio name="ChangeAllTypes1" value="0" onchange="javascript: ChangeAllTypes(this.value)"
+                       style="margin-right:5px">Все типы "целый"
+                <input type=radio name="ChangeAllTypes1" value="1" onchange="javascript: ChangeAllTypes(this.value)"
+                       style="margin-left:15px">Все типы "вещественный"
+                <input type=radio name="ChangeAllTypes1" value="2" onchange="javascript: ChangeAllTypes(this.value)"
+                       style="margin-left:15px">Все типы "текст"
+                <input type=radio name="ChangeAllTypes1" value="3" onchange="javascript: ChangeAllTypes(this.value)"
+                       style="margin-left:15px">Все типы "другой"
+            </p>
+            <p><input type=checkbox onchange="javascript: CustomNames(this)">Программные имена параметров</p>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <p>Создать БП по файлу</p>
+            <p><input type="file" name="BPFile[]" id="BPFile" onchange="CreateSchemeFromFile(this, this.files.length)"
+                      style="margin-bottom:5px" multiple>Создать схему БП по файлу</p>
+            <!-- <p><input type="file" name="BPFile" id="BPFile" onchange="GetRangesFromFile(this)" style="margin-bottom:5px">Создать схему  БП по файлу</p> -->
+            <p><input type=checkbox checked name="CopyDataToBP" id="CopyDataToBP">Скопировать данные из файла в БП</p>
+            <p><input type=checkbox id="IdInFile" name="IdInFile">В файле есть колонка ID</p>
+        </div>
+    </div>
+	
+	<div class="panel panel-default" id = "ontology_panel">
+        <div class="panel-body">
+            <p>Загрузить модель БП</p>
+            <p><input type="file" name="OntologyFile" id="OntologyFile" onchange="CheckOntologyFile(this)"
+                      style="margin-bottom:5px; cursor: pointer" accept=".owl">Загрузить файл с онтологией предметной области</p>
+        </div>
+    </div>
+	
+    <div class="panel panel-default" id="panel_samples" hidden="hidden">
+        <div class="panel-body">
+            <p>
+                Доля обучающей выборки:
+                <input name="TrainSizeInput" min="1" value="80" max="100" id="TrainSizeInput" type="number" style="margin-right: 20px;">
+
+                Доля тестовой выборки:
+                <input name="TestSizeInput" min="1" max="100" value="20" id="TestSizeInput" type="number">
+            </p>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table class="NewBP table table-bordered" id="Scheme" hidden="hidden">
+                <!-- <tr id = "param_name"> -->
+                <tr>
+                    <td><b>Параметр *</b></td>
+                </tr>
+                <!-- <tr id = "param_type"> -->
+                <tr>
+                    <td><b>Тип *</b></td>
+                </tr>
+                <tr>
+                    <td><b>От (Диапазон)*</b></td>
+                </tr>
+                <tr>
+                    <td><b>До (Диапазон)*</b></td>
+                </tr>
+                <!-- <tr id = "param_descript"> -->
+                <tr>
+                    <td><b>Описание</b></td>
+                </tr>
+                <!-- <tr id = "param_unit"> -->
+                <tr>
+                    <td><b>Единицы измерения</b></td>
+                </tr>
+                <tr>
+                    <td><b>Вес</b></td>
+                </tr>
+            </table>
+            <p class="text-center">
+                <input type=submit id='Accept' class="btn btn-default " hidden value='Создать таблицу и загрузить данные'
+                       onclick='FormValidate(event)'>
+            </p>
+            <div id="hidden_info" hidden>
+                <p> * - обязательное свойство для параметра прецедента </p>
+            </div>
+        </div>
+    </div>
+</form>
+
+<select id=Types name='ColType' hidden>
+    <option value="INT">Целый</option>
+    <option value="DOUBLE">Вещественный</option>
+    <option value="VARCHAR(255)">Текст</option>
+    <option value="VARCHAR(255)">Другой</option>
+</select>
+
+<select id=Units name='ColUnit' hidden>
+    <option>м</option>
+    <option>кг</option>
+    <option>с</option>
+    <option>А</option>
+    <option>Гц</option>
+    <option>А</option>
+    <option selected></option>
+</select>
+
+<!-- Селект для весов -->
+<select id=Weights name='ColWeights' hidden>
+</select>
+
+{% endblock%}

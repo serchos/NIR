@@ -1,0 +1,31 @@
+
+<div id = "BPOntologyStorage" data-graph="{{graph_hierarchy}}" data-edges="{{edges}}">
+	<div class="row col-sm-12">
+	<h3>Онтология предметной области</h3>
+		<div class="col-sm-8">
+			<div id="BPnetwork">
+			</div>
+		</div>
+		
+		<div class="col-sm-4" id="BPUL">
+			{%if hierarchy%}
+			<div class="list-group list-group-root well">
+				{% for key, value in hierarchy.items() recursive %}
+					{% if value %}
+						<a href="#{{key}}" class="list-group-item" data-toggle="collapse">
+							<i class="glyphicon glyphicon-chevron-right"></i>{{key}}
+						</a>
+						<div class="list-group collapse" id="{{key}}">
+						{{loop(value.items())}}
+						</div>
+					{% else %}
+					<a href="#" class="list-group-item">{{key}}</a>
+					{% endif %}
+				{%endfor%}
+			</div>
+
+			{% endif %}
+		</div>
+
+	</div>
+</div>
