@@ -167,13 +167,11 @@ def GetSample(CountSampleSize, TextStr):
  Sample = []
  for i in range(0, CountSampleSize):
   randNumber = random.randint(0, len(TextStr)-1)
-  print("randNumber " + str(randNumber))
   Sample.append(TextStr[randNumber])
   TextStr.pop(randNumber)
  return Sample, TextStr
 
 def CopySampleToBP(BPName, TextRowsSample, TabInfo, SampleCode):
- print('CopySampleToBP')
  conn = get_db()
  db = conn.cursor()
  buf_types = []
