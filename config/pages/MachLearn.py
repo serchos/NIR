@@ -799,8 +799,7 @@ def do_cross_validation():
         solutions_list_for_test_cases, max_count_voters_list_for_test_cases = kNN_for_all_cases(train_cases_matrix, test_cases_matrix, k, metric_name, param_weights_list, lower_bounds_for_parametrs_list, upper_bounds_for_parametrs_list)
         accuracy_of_classif.append(count_accuracy_of_classif(make_list_of_str_from_tuple_of_tuples(test_cases_answers), make_list_of_str_from_list_of_int(solutions_list_for_test_cases)))
         print('k = ', k)
-    # кастыль
-    accuracy_of_classif = [round(elem + 21, 2) for elem in accuracy_of_classif]
+    accuracy_of_classif = [round(elem, 2) for elem in accuracy_of_classif]
     print('------------end---------------')
     return render_template('MachLearnCrossValidation_answer.html', max_neighbour_count=max_neighbour_count, accuracy_of_classif=accuracy_of_classif)
     
