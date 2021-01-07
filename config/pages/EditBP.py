@@ -176,6 +176,7 @@ def RenameBP(TabNames):
 	
 @bp.route('/OptimizationBP',  methods = ['POST'])
 def OptimizationBP():
+	print('Optimization')
 	conn = get_db()
 	cur = conn.cursor()
 	BPName=request.values.get('TableChoice')
@@ -188,8 +189,10 @@ def OptimizationBP():
 	Weight=[Str[7] for Str in DescrTabData]
 
 	if OptArr['OptAlgol']=='Classification':
+		print('classification enter')
 		OptTabData=Classification2(TabData[:], OptArr['ClassMetric'], Weight, float(OptArr['ClassSimilarity']))	 
 	elif OptArr['OptAlgol']=='KMeans':
+		print('kmeans enter')
 		OptTabData=KMeans2(TabData, int(OptArr['KMClusterCount'], 10), OptArr['KMMetric'], Weight, OptArr['KMPrimaryCenter'])
 	elif OptArr['OptAlgol']=='TimurAlgorithm':
 		OptTabData=TimurAlgorithm2(TabData[:])

@@ -525,7 +525,7 @@ function Optimization()
 	
 	$.ajax({
 		type: "POST", 
-		url: "/OptimizationBP",
+		url: "/EditBP/OptimizationBP",
 		data: {TableChoice: TabCh, JsonObj: JSON.stringify(OptArr)},
 		success: function(data){
 			alert('Success Optimization!');

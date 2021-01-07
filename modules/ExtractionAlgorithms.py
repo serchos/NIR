@@ -105,7 +105,7 @@ def NormalizeNewData(NewData, MEMat, DMat, UnKeysMat, ColCount):
  
  for  s, ME, D in zip(NewData, MEMat, DMat):
   if IsFloat(s)==False:
-   CountKeysData=Vectorization.CountKeysInStr(s, UnKeysMat[count])
+   CountKeysData=CountKeysInStr(s, UnKeysMat[count])
    NewDataNormal.append(NoLineNormal2(CountKeysData, ME, D))
    count+=1
   else:
@@ -130,20 +130,20 @@ def PrepareForKNN(TabData, ColCount):
   
   #Y=ColData#ERES AND KOSTIL
   if IsFloat(ColData[0])==False:
-   UnKeys=Vectorization.CollectUnKeys(ColData, [])
+   UnKeys=CollectUnKeys(ColData, [])
    UnKeysMat.append(UnKeys)
    ME, D=[], []
 
    for s in ColData:
-    CountKeysData=Vectorization.CountKeysInStr(s, UnKeys)
+    CountKeysData=CountKeysInStr(s, UnKeys)
     ME=FindMinMaxListME(CountKeysData, ME, len(ColData))
 
    for s in ColData:
-    CountKeysData=Vectorization.CountKeysInStr(s, UnKeys)
+    CountKeysData=CountKeysInStr(s, UnKeys)
     D=FindMinMaxListD(CountKeysData, ME, D, len(ColData))
 
    for s in ColData:
-    CountKeysData=Vectorization.CountKeysInStr(s, UnKeys)
+    CountKeysData=CountKeysInStr(s, UnKeys)
     ColDataNormal.append(NoLineNormal2(CountKeysData, ME, D))
 
   else:
